@@ -1,0 +1,629 @@
+/* =========================================================
+   📱 AR APP — PHONE VERSION
+   DESIGN CANVAS: 1080 × 2392
+   =========================================================
+
+   IMPORTANT:
+   The entire UI is treated as a 1080 × 2392 canvas.
+
+   Change ONLY the values in SECTION 1 while designing.
+
+   DO NOT add rotate() or scaleY(-1) to the panels.
+   Your Figma panel images already contain their tilt.
+========================================================= */
+
+
+/* =========================================================
+   🔧 1. EASY HIT-AND-TRY CONTROLS
+   ========================================================= */
+
+:root {
+
+    /* =====================================================
+       PANELS — SIZE
+       ===================================================== */
+
+    /* Increase → bigger panels
+       Decrease → smaller panels */
+
+    --panel-width: 600px;
+
+
+    /* =====================================================
+       SCREEN 1 — INITIAL POSITION
+       ===================================================== */
+
+    /* UPPER PANEL */
+
+    --upper-x: 200px;
+    --upper-y: -65px;
+
+
+    /* LOWER PANEL */
+
+    --lower-x: 200px;
+    --lower-y: 375px;
+
+
+
+    /* =====================================================
+       SCREEN 2 — START AR
+       ===================================================== */
+
+    /* Increase separation by making these more extreme */
+
+    --upper-start-y: -250px;
+    --lower-start-y: 550px;
+
+
+
+    /* =====================================================
+       SCREEN 3 — AR
+       ===================================================== */
+
+    --upper-ar-y: -800px;
+    --lower-ar-y: 1996px;
+
+
+
+    /* =====================================================
+       ENTER BUTTON
+       ===================================================== */
+
+    --enter-width: 200px;
+
+    --enter-x: 205px;
+    --enter-y: 400px;
+
+
+
+    /* =====================================================
+       START AR BUTTON
+       ===================================================== */
+
+    --start-width: 220px;
+
+    --start-x: 195px;
+    --start-y: 400px;
+
+
+
+    /* =====================================================
+       YASH
+       ===================================================== */
+
+    --yash-width: 230px;
+
+    --yash-x: 790px;
+    --yash-y: 100px;
+
+
+
+    /* =====================================================
+       TECHNICAL SECRETARY
+       ===================================================== */
+
+    --designation-width: 320px;
+
+    --designation-x: 60px;
+    --designation-y: 2200px;
+
+
+
+    /* =====================================================
+       ARROW
+       ===================================================== */
+
+    --arrow-width: 140px;
+
+    --arrow-x: 880px;
+    --arrow-y: 2200px;
+
+
+
+    /* =====================================================
+       ANIMATION SPEED
+       ===================================================== */
+
+    --animation-speed: 900ms;
+}
+
+
+
+/* =========================================================
+   2. BASIC RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #000;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100dvh;
+}
+
+
+
+/* =========================================================
+   3. 1080 × 2392 PHONE CANVAS
+
+   This is the actual design area.
+
+   Everything inside this canvas uses pixel coordinates
+   based on your Figma design.
+========================================================= */
+
+#phone-preview {
+
+    position: fixed;
+
+    width: 1080px;
+    height: 2392px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    transform-origin: center center;
+
+    overflow: hidden;
+
+    background: transparent;
+}
+
+
+
+/* =========================================================
+   4. MAIN UI
+========================================================= */
+
+#ui {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 1080px;
+    height: 2392px;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+
+/* =========================================================
+   5. AR CAMERA
+========================================================= */
+
+#ar {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 1080px;
+    height: 2392px;
+
+    z-index: 1;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 700ms ease;
+}
+
+
+body.screen-ar #ar {
+
+    opacity: 1;
+}
+
+
+
+/* =========================================================
+   6. PANELS
+========================================================= */
+
+.panel {
+
+    position: absolute;
+
+    width: var(--panel-width);
+
+    height: auto;
+
+    max-width: none;
+
+    display: block;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    will-change: transform;
+
+    transition:
+        transform
+        var(--animation-speed)
+        cubic-bezier(
+            0.77,
+            0,
+            0.175,
+            1
+        );
+}
+
+
+/* =========================================================
+   7. SCREEN 1
+   INITIAL / ENTER SCREEN
+========================================================= */
+
+
+/* UPPER PANEL */
+
+.upper-panel {
+
+    left: var(--upper-x);
+
+    top: var(--upper-y);
+
+    transform:
+        translateX(-50%);
+}
+
+
+/* LOWER PANEL */
+
+.lower-panel {
+
+    left: var(--lower-x);
+
+    top: var(--lower-y);
+
+    transform:
+        translateX(-50%);
+}
+
+
+
+/* =========================================================
+   8. SCREEN 2
+   START AR SCREEN
+========================================================= */
+
+
+/* UPPER PANEL MOVES UP */
+
+body.screen-start
+.upper-panel {
+
+    transform:
+        translate(
+            -50%,
+            calc(
+                var(--upper-start-y)
+                - var(--upper-y)
+            )
+        );
+}
+
+
+/* LOWER PANEL MOVES DOWN */
+
+body.screen-start
+.lower-panel {
+
+    transform:
+        translate(
+            -50%,
+            calc(
+                var(--lower-start-y)
+                - var(--lower-y)
+            )
+        );
+}
+
+
+
+/* =========================================================
+   9. SCREEN 3
+   AR SCREEN
+========================================================= */
+
+
+/* UPPER PANEL MOVES FAR UP */
+
+body.screen-ar
+.upper-panel {
+
+    transform:
+        translate(
+            -50%,
+            calc(
+                var(--upper-ar-y)
+                - var(--upper-y)
+            )
+        );
+}
+
+
+/* LOWER PANEL MOVES FAR DOWN */
+
+body.screen-ar
+.lower-panel {
+
+    transform:
+        translate(
+            -50%,
+            calc(
+                var(--lower-ar-y)
+                - var(--lower-y)
+            )
+        );
+}
+
+
+
+/* =========================================================
+   10. ENTER BUTTON
+========================================================= */
+
+.enter-button {
+
+    position: absolute;
+
+    left: var(--enter-x);
+    top: var(--enter-y);
+
+    width: var(--enter-width);
+
+    height: auto;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 200;
+
+    pointer-events: auto;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        transform 200ms ease,
+        opacity 400ms ease;
+}
+
+
+.enter-button:active {
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.92);
+}
+
+
+
+/* =========================================================
+   11. START AR BUTTON
+========================================================= */
+
+.start-button {
+
+    position: absolute;
+
+    left: var(--start-x);
+    top: var(--start-y);
+
+    width: var(--start-width);
+
+    height: auto;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 200;
+
+    pointer-events: auto;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        transform 200ms ease,
+        opacity 400ms ease;
+}
+
+
+.start-button:active {
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.92);
+}
+
+
+
+/* =========================================================
+   12. YASH
+========================================================= */
+
+.yash {
+
+    position: absolute;
+
+    left: var(--yash-x);
+    top: var(--yash-y);
+
+    width: var(--yash-width);
+
+    height: auto;
+
+    z-index: 200;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 600ms ease;
+}
+
+
+body.screen-ar
+.yash {
+
+    opacity: 1;
+}
+
+
+
+/* =========================================================
+   13. TECHNICAL SECRETARY
+========================================================= */
+
+.designation {
+
+    position: absolute;
+
+    left: var(--designation-x);
+    top: var(--designation-y);
+
+    width: var(--designation-width);
+
+    height: auto;
+
+    z-index: 200;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 600ms ease;
+}
+
+
+body.screen-ar
+.designation {
+
+    opacity: 1;
+}
+
+
+
+/* =========================================================
+   14. ARROW
+========================================================= */
+
+.arrow {
+
+    position: absolute;
+
+    left: var(--arrow-x);
+    top: var(--arrow-y);
+
+    width: var(--arrow-width);
+
+    height: auto;
+
+    z-index: 200;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 600ms ease;
+}
+
+
+body.screen-ar
+.arrow {
+
+    opacity: 1;
+}
+
+
+
+/* =========================================================
+   15. HIDDEN ELEMENT
+========================================================= */
+
+.hidden {
+
+    opacity: 0 !important;
+
+    pointer-events: none !important;
+}
+
+
+
+/* =========================================================
+   16. MOBILE SAFETY
+
+   IMPORTANT:
+   DO NOT CHANGE PANEL SIZE HERE.
+
+   There is intentionally NO:
+
+       @media (max-width: 600px) {
+           .panel { ... }
+       }
+
+   Therefore your --panel-width value above will always
+   remain in control.
+========================================================= */
+
+@media (orientation: landscape) {
+
+    #phone-preview {
+
+        height: 2392px;
+        width: 1080px;
+    }
+}
